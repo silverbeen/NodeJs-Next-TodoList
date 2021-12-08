@@ -4,6 +4,7 @@ const morgan = require("morgan"); //작업 수행시 로깅
 const cookieParser = require("cookie-parser"); // 쿠키 파싱 미들웨어
 const cors = require("cors"); // CORS 에러 방지
 const dotenv = require("dotenv"); // .env SECRET 정보 가져오기
+const app = express;
 
 // passportConfig - passport 내부 js 실행 (use, serialize, deserialze)
 const passportConfig = require("./passport");
@@ -11,14 +12,15 @@ const passport = require("passport"); // passport 미들웨어 가져오기
 
 const { sequelize } = require("./models/index");
 
-const pageRouter = require("");
-const userRouter = require("");
+const pageRouter = require("./router/page");
+
+const userRouter = require("./router/user");
 
 // dotenv 실행
 // dotenv를 통해 SECRET KEY를 받는 코드보다 위에 위치해야한다.
 dotenv.config();
 
-const app = express;
+app.use("/", pageRouter);
 
 sequelize
   .sync({ force: false })
